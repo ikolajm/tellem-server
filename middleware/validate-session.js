@@ -2,7 +2,7 @@ module.exports = (req, res, next) => {
     if (req.method == "OPTIONS") return next();
 
     const token = req.headers.authorization;
-    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
         // FAIL - Bad token
         if (err) {
             req.errors = err;
