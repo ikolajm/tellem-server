@@ -1,3 +1,6 @@
+const jwt = require("jsonwebtoken");
+const User = require("../db").User;
+
 module.exports = (req, res, next) => {
     if (req.method == "OPTIONS") return next();
 
@@ -8,8 +11,8 @@ module.exports = (req, res, next) => {
             req.errors = err;
             return next();
         }
-        
-        let user = await User.findOne({ where: { id: decodedToken.id } })
+        console.log("decoded token",decodedToken)
+        let user = await User.findOne({ where: { uuid: decodedToken.uuid } })
         // FAIL - No user found
         if (!user) throw 'err';
         // PASS - User is set
