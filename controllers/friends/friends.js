@@ -75,8 +75,11 @@ router.get("/pending", async (req, res) => {
     let outgoingMod = [];
     outgoing.forEach((item, index) => {
         item.dataValues.user = outgoingUsers[index];
-        console.log(item)
-        item.dataValues.user.dataValues.background = colorGen();
+        try {
+            item.dataValues.user.dataValues.background = colorGen();
+        } catch {
+            console.log("potential problem here")
+        }
         outgoingMod.push(item);
     });
 
