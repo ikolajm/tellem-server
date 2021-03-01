@@ -125,7 +125,7 @@ router.post("/request/accept/:uuid", async (req, res) => {
         friendId: req.user.uuid,
         userId: req.body.friendId
     })
-    FriendRequests.delete({
+    Request.delete({
         where: { uuid: req.params.uuid }
     })
     .then(deleted => res.json({ status: "SUCCESS" }))
@@ -134,7 +134,7 @@ router.post("/request/accept/:uuid", async (req, res) => {
 
 // Decline friend request
 router.delete("/request/decline/:uuid", async (req, res) => {
-    FriendRequests.destroy({
+    Request.destroy({
         where: { uuid: req.params.uuid }
     })
     .then(deleted => res.json({ status: "SUCCESS" }))
