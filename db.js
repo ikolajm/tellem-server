@@ -2,7 +2,13 @@ const Sequelize = require("sequelize");
 
 // Initialize postgres connection
 const sequelize = new Sequelize(`${process.env.DATABASE_URL}`, {
-    dialect: 'postgres'
+    dialect: "postgres",
+    dialectOptions: {
+        ssl: {
+        require: true, // This will help you. But you will see nwe error
+        rejectUnauthorized: false // This line will fix new error
+        }
+    },
 });
 
 // Authenticate postgres connection
