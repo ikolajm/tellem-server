@@ -9,7 +9,7 @@ const moment = require("moment");
 const { v4: uuidv4 } = require('uuid');
 
 
-const formatSingle = async conversation => {
+const formatSingle = async (conversation, limit, offset) => {
     // Get conversation information
     let foundConversation = await Conversation.findOne({
         where: { id: conversation.conversationId }
@@ -39,8 +39,8 @@ const formatSingle = async conversation => {
     let messages = await Message.findAll({
         where: { conversationId: conversation.conversationId },
         order: [["createdAt", "DESC"]],
-        // limit: 25,
-        offset: 0,
+        // limit,
+        // offset,
         include: [
             {
                 model: User
@@ -86,14 +86,14 @@ const formatSingle = async conversation => {
     return obj;
 }
 
-// Get first batch of messages for conversation/all users involved
-router.get("/:id", async (req, res) => {
+// Get batch of messages for conversation/all users involved
+router.post("/:id", async (req, res) => {
     // Get all conversations that user is involved in
     let conversation = await UserConversation.findOne({
         where: { conversationId: req.params.id }
     })
 
-    let obj = await formatSingle(conversation);
+    let obj = await formatSingle(conversation, 51, req.body.offset);
 
     res.json({
         status: "SUCCESS",
