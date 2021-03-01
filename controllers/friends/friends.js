@@ -116,7 +116,7 @@ router.post("/request/accept/:uuid", async (req, res) => {
     let uuid1 = await uuidv4();
     let createFriendShip1 = await Friend.create({
         uuid: uuid1,
-        friendId: req.body.friendUuidd,
+        friendId: req.body.friendUuid,
         userId: req.user.id
     })
     let uuid2 = await uuidv4();
