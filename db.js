@@ -2,10 +2,7 @@ const Sequelize = require("sequelize");
 
 // Initialize postgres connection
 const sequelize = new Sequelize(`${process.env.DATABASE_URL}`, {
-    dialect: 'postgres',
-    dialectOptions: {
-        ssl: true
-    }
+    dialect: 'postgres'
 });
 
 // Authenticate postgres connection
