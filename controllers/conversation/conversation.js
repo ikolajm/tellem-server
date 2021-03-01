@@ -86,21 +86,6 @@ const formatSingle = async (conversation, limit, offset) => {
     return obj;
 }
 
-// Get batch of messages for conversation/all users involved
-router.post("/:id", async (req, res) => {
-    // Get all conversations that user is involved in
-    let conversation = await UserConversation.findOne({
-        where: { conversationId: req.params.id }
-    })
-
-    let obj = await formatSingle(conversation, 51, req.body.offset);
-
-    res.json({
-        status: "SUCCESS",
-        conversation: obj
-    })
-})
-
 // Save changes to conversation
 router.put("/update/:id", async (req, res) => {
     let conversationEdit = await Conversation.update(
@@ -191,6 +176,21 @@ router.post("/create", async (req, res) => {
     res.json({
         status: "SUCCESS",
         conversationId: conversation.id
+    })
+})
+
+// Get batch of messages for conversation/all users involved
+router.post("/:id", async (req, res) => {
+    // Get all conversations that user is involved in
+    let conversation = await UserConversation.findOne({
+        where: { conversationId: req.params.id }
+    })
+
+    let obj = await formatSingle(conversation, 51, req.body.offset);
+
+    res.json({
+        status: "SUCCESS",
+        conversation: obj
     })
 })
 
